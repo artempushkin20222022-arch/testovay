@@ -575,7 +575,11 @@
     @media(max-width:540px){header{padding:12px 16px}.brand-subtitle{font-size:10px}.brand-title{font-size:13px}.stats-grid{grid-template-columns:1fr 1fr;gap:9px}.stat-badge-card{padding:14px}.stat-value{font-size:25px}.stat-label{font-size:10px}.card{padding:18px}.service-mark{display:none}.dashboard-intro h1{font-size:24px}.sync-bar{align-items:flex-start}.sync-status{min-width:0}input,textarea,select{font-size:16px}#authSection{padding:28px 22px}.field-grid{grid-template-columns:1fr;gap:0}.appeal-item{padding:16px}.filter-pills{gap:4px}.pill-btn{font-size:10px}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
-  </style>
+
+    :root{--bg-page:#f3f5fa;--primary:#3d4d6a;--accent:#669feb;--accent-hover:#538bd7;--text-main:#343d50;--text-muted:#8a97ad;--border-color:#e9edf5;--radius-card:26px}
+    body{background:#f3f5fa}header{background:#ffffffdb;border-bottom-color:#edf0f7}.brand-icon{background:linear-gradient(140deg,#d5e8ff,#c8c6f7);box-shadow:inset 0 0 0 3px #ffffff90}.brand-icon svg{stroke:#fff}.card{border-color:#edf0f6;border-radius:26px;box-shadow:0 10px 30px #687ba507}.dashboard-intro h1{color:#252c3b;font-weight:650}.service-mark{color:#8c9dba;background:#edf3fc;border:0}.stat-badge-card{border-radius:22px;border-color:#edf0f6!important}.stat-badge-card:nth-child(2){background:#fffaf1}.stat-badge-card:nth-child(3){background:#f4faf7}.stat-badge-card:nth-child(4){background:#fbf5ff}.stat-value{color:#6c91c4}.stat-label{font-weight:500}.sync-dot{background:#a4cbbb}.sync-status{color:#92a1b8}.appeal-item.selected{background:#f4f8ff;box-shadow:inset 3px 0 #8ab4ee}.appeal-item:hover{background:#f8faff}.route-dot.verified{color:#91b4a3}.route-dot.unverified{color:#bc96cd}.recipient-notice.verified{background:#f5faf7;border-color:#edf4ef;color:#8ba497}.recipient-notice.blocked{background:#fff8f2;border-color:#f7eadd;color:#bc9c7b}.selected-question{border-color:#d1e1fa;background:#f7faff;color:#8295b1}.pill-btn.active{background:#edf3ff;color:#83a6da;border-color:#dbe7fa}.pill-btn{background:#f6f8fc;color:#9aa6b9}.btn-submit-main{background:#6ca3ee;box-shadow:0 5px 12px #90b3e01a}.btn-submit-main:hover{background:#5b92dd}.btn-submit-main:disabled{background:#c3cfe0}.file-attach-box{border-color:#e0e7f4;background:#fcfdff}input,textarea,select{background:#fcfdff;border-color:#e9edf5}input:focus,textarea:focus{border-color:#b0cdf8;box-shadow:0 0 0 3px #b0cdf812}.tpl-btn{border-color:#e9edf4;background:#fafbfe;color:#99a8bf}.tpl-btn:hover{border-color:#d6e4fb;color:#8aa9d7;background:#f3f7ff}.tag-wait{background:#fff5df;color:#c0a16a}.tag-done{background:#eef8f2;color:#95b3a2}#authSection .shield-icon{background:#f0edfe;color:#b3a2e5}.empty-state{color:#a4afc1}footer{border-color:#e9edf5;color:#aeb7c8}
+
+</style>
   <meta name="referrer" content="no-referrer">
 </head>
 <body>
@@ -763,7 +767,7 @@
   </footer>
 
   <script>
-    const BACKEND_API_URL = 'https://script.google.com/macros/s/AKfycbyqBswcQVjWuR5ogEY4sjwY2dSrLNK-r6UFhc_s1hdSJg_GJ79yg6yXE0K3tDeyPFJ4/exec';
+    const BACKEND_API_URL = "https://script.google.com/macros/s/AKfycbyqBswcQVjWuR5ogEY4sjwY2dSrLNK-r6UFhc_s1hdSJg_GJ79yg6yXE0K3tDeyPFJ4/exec";
     const DEFAULT_KOMITET_NAME = 'Комитет по образованию администрации муниципального округа Егорьевск';
     let sessionToken = '';
     let rawAppealsList = [];
