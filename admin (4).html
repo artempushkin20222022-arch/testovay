@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кабинет оператора | Цифровое образование м.о. Егорьевск</title>
+  <style>
+    :root {
+      --bg-page: #f5f7fb;
+      --card-bg: #ffffff;
+      --primary: #0f2e5a;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --radius-card: 22px;
+      --radius-inner: 14px;
+      --radius-pill: 9999px;
+      --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--bg-page);
+      color: var(--text-main);
+      font-size: 14px;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Шапка */
+    header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-box {
+      max-width: 860px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #0f2e5a 0%, #1e4277 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(15, 46, 90, 0.2);
+    }
+
+    .brand-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: #ffffff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .brand-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-logout {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 6px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 11.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-logout:hover {
+      background: #fee2e2;
+      color: #dc2626;
+      border-color: #fca5a5;
+    }
+
+    main {
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 16px;
+      flex: 1;
+    }
+
+    /* Карточки */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      padding: 22px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* Экран входа */
+    #authSection {
+      max-width: 420px;
+      margin: 60px auto;
+      text-align: center;
+    }
+
+    .shield-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      background: #eff6ff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .shield-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--accent);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .pw-wrap {
+      position: relative;
+      margin-bottom: 16px;
+    }
+
+    .pw-input {
+      width: 100%;
+      padding: 12px 44px 12px 14px;
+      font-size: 15px;
+      border-radius: var(--radius-inner);
+      border: 1.5px solid var(--border-color);
+      outline: none;
+      background: #f8fafc;
+    }
+
+    .pw-input:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+    }
+
+    .pw-toggle-btn {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
+    }
+
+    /* Статистика обращений */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .stat-badge-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      padding: 14px;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .stat-label {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-top: 2px;
+    }
+
+    /* Live-индикатор */
+    .sync-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 14px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: var(--radius-pill);
+      margin-bottom: 16px;
+      font-size: 12px;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .sync-status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sync-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2563eb;
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.6); }
+      70% { box-shadow: 0 0 0 6px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+
+    /* Фильтры и поиск */
+    .filters-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pills {
+      display: flex;
+      gap: 6px;
+    }
+
+    .pill-btn {
+      padding: 6px 14px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .pill-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    /* Список обращений */
+    .appeal-item {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      padding: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #ffffff;
+    }
+
+    .appeal-item:hover {
+      border-color: #93c5fd;
+      background: #f8fafc;
+    }
+
+    .appeal-item.selected {
+      border-color: var(--accent);
+      background: #eff6ff;
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+    }
+
+    .appeal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .fio-title {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-main);
+    }
+
+    .status-tag {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+    }
+
+    .tag-wait { background: #fef3c7; color: #b45309; }
+    .tag-done { background: #dcfce7; color: #15803d; }
+
+    .meta-line {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .text-preview {
+      font-size: 13px;
+      color: #334155;
+      background: #f8fafc;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border-left: 3px solid #cbd5e1;
+      margin-top: 6px;
+    }
+
+    /* Поля формы ответа */
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 13.5px;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      outline: none;
+      background: #f8fafc;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .templates-bar {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .tpl-btn {
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 5px 12px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+    }
+
+    .tpl-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-main);
+    }
+
+    /* Зона прикрепления файлов */
+    .file-attach-box {
+      border: 1.5px dashed var(--border-color);
+      border-radius: var(--radius-inner);
+      padding: 14px;
+      background: #f8fafc;
+      text-align: center;
+      margin-bottom: 16px;
+      transition: border-color 0.18s ease;
+    }
+
+    .file-attach-box:hover {
+      border-color: var(--accent);
+    }
+
+    .file-chosen-chip {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      padding: 8px 14px;
+      border-radius: var(--radius-inner);
+      margin-top: 8px;
+      font-size: 13px;
+      color: #1e40af;
+      font-weight: 600;
+    }
+
+    .file-chosen-chip button {
+      background: none;
+      border: none;
+      color: #dc2626;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .btn-submit-main {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-inner);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit-main:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-submit-main:disabled {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .notification {
+      padding: 12px 14px;
+      border-radius: var(--radius-inner);
+      font-size: 13px;
+      margin-bottom: 16px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification.success { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; display: flex; }
+    .notification.error { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; display: flex; }
+
+    footer {
+      margin-top: auto;
+      padding: 22px 16px;
+      border-top: 1px solid var(--border-color);
+      background: #ffffff;
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+      :root { --primary:#143d48; --accent:#087e82; --accent-hover:#07686d; --text-main:#193944; --text-muted:#67818a; --border-color:#dde7ea; --bg-page:#f1f5f7; --radius-card:20px; --radius-inner:12px; --shadow-soft:0 10px 36px -22px #163f4d40; }
+    body { background:radial-gradient(ellipse at 10% 0,#e2eeed,transparent 50%),var(--bg-page); }
+    header { padding:15px 24px; } .header-box{max-width:1240px} .brand-icon{background:#153e49;box-shadow:none} .brand-title{font-size:15px}
+    main { width:100%; max-width:1288px; padding:28px 24px 40px; }
+    .card { padding:24px; border:1px solid var(--border-color); box-shadow:var(--shadow-soft); }
+    #authSection { max-width:440px; margin:48px auto 80px; text-align:center; padding:36px; }
+    #authSection .shield-icon { color:#087e82; background:#e8f4f1; }
+    .dashboard-intro { display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin-bottom:24px; }
+    .eyebrow { color:#739098; font-size:10px; letter-spacing:1.5px; font-weight:750; text-transform:uppercase; }
+    .dashboard-intro h1 { font-size:30px; letter-spacing:-.8px; font-weight:750; margin:6px 0; line-height:1.2; }
+    .dashboard-intro p { color:var(--text-muted); font-size:12px; }
+    .service-mark { color:#4e7d80; background:#e4f0ee; border:1px solid #d3e5e3; padding:8px 12px; border-radius:10px; font-size:11px; }
+    .stats-grid { grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:18px; }
+    .stat-badge-card { text-align:left; padding:19px 20px; border-radius:16px; position:relative; box-shadow:none; }
+    .stat-value { font-size:30px; font-weight:650; letter-spacing:-1px; margin-bottom:4px; line-height:1.2; }
+    .stat-label { font-size:11px; font-weight:500; }
+    .sync-bar { background:transparent; border:0; padding:0 2px 18px; gap:12px; } .sync-dot{background:#0c8984;box-shadow:none;animation:none} #syncText{font-size:11px}
+    .workspace-grid { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); grid-template-areas:'registry reply'; gap:20px; align-items:start; }
+    #registryCard { grid-area:registry; padding:0; overflow:hidden; }
+    #registryCard>.card-title { padding:20px 20px 0; border:0; margin-bottom:15px; }
+    #replyComposer { grid-area:reply; position:sticky; top:88px; scroll-margin-top:90px; }
+    .card-title { font-size:15px; gap:8px; flex-wrap:wrap; }
+    #selectedIndicator { width:100%; font-size:10px!important; font-family:ui-monospace,SFMono-Regular,monospace; color:#7b9199!important; overflow-wrap:anywhere; }
+    .filters-bar { flex-direction:column; align-items:stretch; gap:12px; padding:0 18px 18px; margin-bottom:0; }
+    .filter-pills { flex-wrap:wrap; gap:5px; }
+    .pill-btn { border-radius:8px; background:#f2f6f7; border-color:transparent; font-size:10.5px; padding:7px 9px; }
+    .pill-btn.active { background:#e1f1ef; color:#0c7375; border-color:#cce4e1; }
+    #tableSearch { width:100%; background:#f6f9fa; padding:11px 12px!important; border-radius:10px; }
+    #appealsContainer { max-height:1050px; overflow:auto; border-top:1px solid #e5edef; }
+    .appeal-item { padding:19px 20px; border:0; border-bottom:1px solid #e6edef; border-radius:0; margin:0; box-shadow:inset 3px 0 transparent; cursor:pointer; background:white; }
+    .appeal-item:hover { background:#f7fbfb; transform:none; }
+    .appeal-item.selected { background:#f0f8f7; border-color:#e0eceb; box-shadow:inset 3px 0 #0c8581; }
+    .appeal-head{margin-bottom:7px;align-items:center;gap:8px}.appeal-number{color:#769098;font-size:10px;font-variant-numeric:tabular-nums}.fio-title{font-size:14px;font-weight:700;margin-bottom:3px;color:#254651}
+    .route-dot{font-size:10px;white-space:nowrap;font-weight:650}.route-dot.verified{color:#0a8170}.route-dot.unverified{color:#aa6b20}
+    .meta-line{font-size:11px;line-height:1.6;color:#71868f}.text-preview{font-size:12px;line-height:1.65;color:#375661;margin:10px 0;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+    .appeal-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap}.category-chip{font-size:10px;color:#627e88}.status-tag{font-size:9.5px;border-radius:6px;padding:4px 7px;font-weight:500}.tag-wait{background:#fff3dd;color:#9c6e24}.tag-done{background:#e5f3ec;color:#277354}.document-link{display:inline-block;color:#087e82;font-size:11px;margin-top:8px;text-decoration:none}
+    .recipient-notice { font-size:12px; line-height:1.6; border-radius:12px; padding:12px 14px; margin-bottom:16px; border:1px solid #dce8eb; background:#f4f8f9; color:#5f7a84; }
+    .recipient-notice.verified { background:#eef8f3; border-color:#d9eae0; color:#32634f; }
+    .recipient-notice.blocked { background:#fff7ed; border-color:#f0dec9; color:#946121; }
+    .selected-question { white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; color:#395a67; line-height:1.65; max-height:160px; overflow:auto; padding:12px 14px; background:#f6f9fa; border-left:2px solid #b8d3d4; border-radius:0 10px 10px 0; margin:8px 0 18px; }
+    .selected-question:empty{display:none}.selected-meta{font-size:10px;color:#7a929b;margin:0 0 6px}.previous-reply{white-space:pre-wrap;font-size:11px;line-height:1.65;color:#69838c;background:#f5f8f9;padding:12px;border-radius:10px;margin-bottom:16px;max-height:150px;overflow:auto}
+    .field-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }.form-group{margin-bottom:16px} label{font-size:11px;letter-spacing:0;text-transform:none;color:#4a6974;font-weight:650}
+    input,textarea,select{font-size:13px;border:1px solid #dce7e9;background:#fbfcfd;min-width:0}input:focus,textarea:focus{border-color:#168c8a;box-shadow:0 0 0 3px #168c8a12}input[readonly]{color:#65808a;background:#f4f7f8!important;font-size:11px}
+    .tpl-btn{font-size:10px;padding:6px 9px;border-radius:8px;color:#54747f;background:#f6f9fa;border-color:#e0e8eb}.tpl-btn:hover{border-color:#91b7b7;color:#087e82;background:#eff7f6}.tpl-row{gap:5px}
+    #replyText{min-height:170px;font-size:13px;line-height:1.7;resize:vertical}.reply-counter{text-align:right;font-size:10px;color:#7c939b;margin-top:5px}.followup-label{display:flex;gap:9px;align-items:flex-start;padding:12px;background:#fff8e9;border:1px solid #f1e3c4;border-radius:10px;font-size:11px;line-height:1.6;margin:14px 0;color:#8b6e33}.followup-label input{width:auto;flex:none;margin-top:3px}
+    .btn-submit-main { background:#0c797d; box-shadow:none; border-radius:12px; font-size:13px; padding:14px; }.btn-submit-main:hover{background:#09666c;box-shadow:none;transform:none}.btn-submit-main:disabled{background:#a1b2b7;cursor:not-allowed}
+    .file-attach-box{background:#fafcfc;border:1px dashed #cbdbde;border-radius:12px;padding:13px}.file-chosen-chip{font-size:11px;overflow-wrap:anywhere}.notification{font-size:12px;line-height:1.7;overflow-wrap:anywhere}.empty-state{text-align:center;padding:45px 20px;color:#7e969e}.empty-state span{display:block;font-size:30px;color:#acc4c8}.empty-state strong{display:block;color:#516f7a;font-size:13px;margin:8px}.empty-state p{font-size:11px}footer{background:transparent;font-size:10px}
+    :focus-visible{outline:3px solid #148c8d70;outline-offset:3px}[hidden]{display:none!important}
+    @media(max-width:900px){.workspace-grid{grid-template-columns:1fr;grid-template-areas:'registry' 'reply'}#replyComposer{position:static}#appealsContainer{max-height:460px}main{padding:22px 16px}.dashboard-intro h1{font-size:25px}}
+    @media(max-width:540px){header{padding:12px 16px}.brand-subtitle{font-size:10px}.brand-title{font-size:13px}.stats-grid{grid-template-columns:1fr 1fr;gap:9px}.stat-badge-card{padding:14px}.stat-value{font-size:25px}.stat-label{font-size:10px}.card{padding:18px}.service-mark{display:none}.dashboard-intro h1{font-size:24px}.sync-bar{align-items:flex-start}.sync-status{min-width:0}input,textarea,select{font-size:16px}#authSection{padding:28px 22px}.field-grid{grid-template-columns:1fr;gap:0}.appeal-item{padding:16px}.filter-pills{gap:4px}.pill-btn{font-size:10px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+  </style>
+  <meta name="referrer" content="no-referrer">
+</head>
+<body>
+
+  <header>
+    <div class="header-box">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div>
+          <div class="brand-title">Кабинет оператора</div>
+          <div class="brand-subtitle">Комитет по образованию м.о. Егорьевск</div>
+        </div>
+      </div>
+      <div class="header-actions" id="headerActions" style="display:none;">
+        <button class="btn-logout" onclick="logout()">
+          <svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Выйти
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ЭКРАН 1: Авторизация по сложному мастер-паролю -->
+    <div id="authSection" class="card">
+      <div class="shield-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h2 style="font-size:17px; font-weight:700; color:var(--primary); margin-bottom:6px;">Защищенный служебный вход</h2>
+      <p style="font-size:12.5px; color:var(--text-muted); margin-bottom:18px;">Доступ к персональным данным заявителей (152-ФЗ РФ):</p>
+
+      <div class="pw-wrap">
+        <input type="password" id="pwInput" autocomplete="current-password" class="pw-input" placeholder="Введите пароль администратора..." onkeydown="if(event.key==='Enter') login()">
+        <button type="button" class="pw-toggle-btn" aria-label="Показать или скрыть пароль" onclick="togglePasswordVisibility()">
+          <svg id="eyeIcon" style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+
+      <button class="btn-submit-main" id="btnLogin" onclick="login()">
+        Войти в кабинет оператора
+      </button>
+      <div id="authErrorNotice" style="color:#dc2626; font-size:12px; font-weight:600; margin-top:12px; display:none;"></div>
+    </div>
+
+    <!-- ЭКРАН 2: Полнофункциональная панель управления -->
+    <div id="adminPanel" style="display:none;">
+      <div class="dashboard-intro"><div><div class="eyebrow">Электронная приёмная · Егорьевск</div><h1>Обращения граждан</h1><p>Проверьте вопрос, подготовьте ответ и направьте его заявителю.</p></div><span class="service-mark">Служебный кабинет</span></div>
+
+      <!-- Сводная аналитика -->
+      <div class="stats-grid">
+        <div class="stat-badge-card">
+          <div class="stat-value" id="statTotal">0</div>
+          <div class="stat-label">Всего обращений</div>
+        </div>
+        <div class="stat-badge-card" style="border-color:#fde68a;">
+          <div class="stat-value" style="color:#b45309;" id="statPending">0</div>
+          <div class="stat-label">Ожидают ответа</div>
+        </div>
+        <div class="stat-badge-card" style="border-color:#a7f3d0;">
+          <div class="stat-value" style="color:#059669;" id="statAnswered">0</div>
+          <div class="stat-label">Ответ направлен</div>
+        </div>
+        <div class="stat-badge-card" style="border-color:#eadfcf"><div class="stat-value" id="statUnverified" style="color:#a1712b">0</div><div class="stat-label">Требуют проверки ID</div></div>
+      </div>
+
+      <!-- Live-индикатор синхронизации -->
+      <div class="sync-bar">
+        <div class="sync-status">
+          <span class="sync-dot"></span>
+          <span id="syncText">Синхронизация в реальном времени (каждые 15 сек)</span>
+        </div>
+        <label style="display:flex; align-items:center; gap:6px; cursor:pointer; font-size:12px; text-transform:none; margin:0;">
+          <input type="checkbox" id="autoSyncCheck" checked onchange="toggleAutoSync()" style="width:auto; margin:0;">
+          Автообновление
+        </label>
+      </div>
+
+      <div id="statusNotice" class="notification" role="status" aria-live="polite"></div>
+
+      <div class="workspace-grid">
+      <!-- Формирование ответа -->
+      <div class="card" id="replyComposer">
+        <div class="card-title">
+          <span>Официальный ответ</span>
+          <span id="selectedIndicator" style="font-size:12px; font-weight:600; color:var(--text-muted);">Обращение не выбрано</span>
+        </div>
+
+        <div id="recipientNotice" class="recipient-notice neutral" role="status">Выберите обращение из реестра.</div>
+        <div id="selectedMeta" class="selected-meta"></div><div id="selectedQuestion" class="selected-question"></div>
+        <div id="previousReply" class="previous-reply" hidden></div>
+        <div class="field-grid">
+          <div class="form-group">
+            <label>Идентификаторы заявителя в МАКС</label>
+            <input type="text" id="targetDisplayId" placeholder="Выберите обращение из реестра..." required readonly style="background:#f1f5f9; font-weight:600;">
+
+
+          </div>
+          <div class="form-group">
+            <label>ФИО заявителя</label>
+            <input type="text" id="targetFio" placeholder="ФИО..." readonly style="background:#f1f5f9;">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+          <div class="form-group">
+            <label>Тематика вопроса</label>
+            <input type="text" id="targetCategory" placeholder="Тема..." readonly style="background:#f1f5f9;">
+          </div>
+          <div class="form-group">
+            <label>Организация (от чьего лица дается ответ)</label>
+            <div style="display:flex; gap:6px; margin-bottom:6px;">
+              <button type="button" class="tpl-btn" onclick="setReplyOrg('komitet')">🏛 От Комитета</button>
+              <button type="button" class="tpl-btn" id="btnOrgSchool" onclick="setReplyOrg('school')" style="display:none;">🏫 От Школы</button>
+            </div>
+            <input type="text" id="targetOrg" placeholder="Организация..." style="background:#ffffff;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Быстрые шаблоны ответов</label>
+          <div class="templates-bar">
+            <button type="button" class="tpl-btn" onclick="applyTemplate('work')">Принято в работу</button>
+            <button type="button" class="tpl-btn" onclick="applyTemplate('done')">Вопрос урегулирован</button>
+            <button type="button" class="tpl-btn" onclick="applyTemplate('visit')">Приглашение на личный прием</button>
+          </div>
+          <label>Текст официального ответа</label>
+          <textarea id="replyText" maxlength="6000" placeholder="Введите подробный официальный ответ заявителю..."></textarea>
+          <div id="replyCounter" class="reply-counter">0 / 6 000</div>
+        </div>
+
+        <!-- Прикрепление файла -->
+        <div class="form-group">
+          <label>Прикрепить документ или фото (PDF, JPEG, PNG, DOCX, XLSX до 8 МБ)</label>
+          <div class="file-attach-box">
+            <input type="file" id="replyFileInput" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx" onchange="handleFileSelected(event)" style="display:none;">
+            <button type="button" class="tpl-btn" onclick="document.getElementById('replyFileInput').click()" style="padding:8px 16px; font-size:12.5px; background:#eff6ff; color:#2563eb; border-color:#bfdbfe;">
+              📎 Выбрать документ или фото
+            </button>
+            <div id="fileChip" class="file-chosen-chip">
+              <span id="fileNameLabel">документ.pdf</span>
+              <button type="button" onclick="removeAttachedFile()">✕ Удалить</button>
+            </div>
+          </div>
+        </div>
+
+        <label id="followupWrap" class="followup-label" hidden><input type="checkbox" id="followupCheck"><span>Это дополнительный ответ по уже обработанному обращению. Направить новое сообщение этому же заявителю.</span></label>
+        <button type="button" disabled id="btnSendReply" class="btn-submit-main" onclick="sendOfficialReply()">
+          <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Направить официальный ответ в личные сообщения заявителю
+        </button>
+      </div>
+
+      <!-- Реестр обращений в реальном времени -->
+      <div class="card" id="registryCard">
+        <div class="card-title">
+          <span>Реестр обращений <small id="listCount" style="font-size:10px;color:var(--text-muted)"></small></span>
+          <button style="background:none; border:none; color:var(--accent); cursor:pointer; font-size:12.5px; font-weight:700;" onclick="loadAppeals(true)">Обновить сейчас</button>
+        </div>
+
+        <!-- Фильтры и поиск -->
+        <div class="filters-bar">
+          <div class="filter-pills">
+            <button class="pill-btn active" id="fAll" onclick="setFilter('all')">Все</button>
+            <button class="pill-btn" id="fWait" onclick="setFilter('wait')">Ожидают ответа</button>
+            <button class="pill-btn" id="fDone" onclick="setFilter('done')">Ответ направлен</button>
+            <button class="pill-btn" id="fUnsafe" onclick="setFilter('unsafe')">Проверить ID</button>
+          </div>
+          <div style="width:100%">
+            <input type="text" id="tableSearch" placeholder="Поиск по ФИО, телефону, ID, тексту..." oninput="applyFilters()" style="padding:8px 12px; font-size:12.5px;">
+          </div>
+        </div>
+
+        <div id="appealsContainer">
+          <div style="text-align:center; padding:24px; color:var(--text-muted);">Загрузка обращений...</div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    Комитет по образованию администрации муниципального округа Егорьевск &bull; Служебная панель оператора &bull; 152-ФЗ РФ
+  </footer>
+
+  <script>
+    const BACKEND_API_URL = 'https://script.google.com/macros/s/AKfycbw5zGkr605yPMHFp9nutKvDzynMWCOUE_AErJUJuFlXPZ9sjYlQ8NfxQpg5EfFvkni6/exec';
+    const DEFAULT_KOMITET_NAME = 'Комитет по образованию администрации муниципального округа Егорьевск';
+    let sessionToken = '';
+    let rawAppealsList = [];
+    let activeFilter = 'all';
+    let selectedKey = '';
+    let selectedOrg = '';
+    let syncIntervalId = null;
+    let syncing = false;
+    let sendInFlight = false;
+    let fileReading = false;
+    let fileSequence = 0;
+    let attachedFileBase64 = null, attachedFileName = null, attachedFileMime = null;
+    const drafts = new Map();
+    const operations = new Map();
+
+    const $ = id => document.getElementById(id);
+    const escapeHtml = value => String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const itemKey = item => item.appealId || 'legacy_' + item.rowIdx;
+    const selectedItem = () => rawAppealsList.find(item => itemKey(item) === selectedKey);
+    const isAnswered = item => !!item.replyText || String(item.status || '').includes('Ответ направлен');
+    const safeUrl = value => { try { const url = new URL(String(value)); return url.protocol === 'https:' ? url.href : ''; } catch (_) { return ''; } };
+    function notice(kind, message) {
+      $('statusNotice').className = 'notification ' + kind; $('statusNotice').textContent = message;
+    }
+    async function apiRequest(payload, timeout = 45000) {
+      const token = sessionToken;
+      const controller = new AbortController(), timer = setTimeout(() => controller.abort(), timeout);
+      try {
+        const response = await fetch(BACKEND_API_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(Object.assign({}, payload, { sessionToken:token })), signal:controller.signal, cache:'no-store', credentials:'omit', referrerPolicy:'no-referrer' });
+        if (!response.ok) throw new Error('Сервис недоступен (HTTP ' + response.status + ').');
+        const result = await response.json();
+        if (result.status !== 'success') { const error = new Error(result.message || 'Операция не выполнена.'); error.code = result.code; throw error; }
+        if (payload.action !== 'admin_login' && token !== sessionToken) throw new Error('Сессия изменена. Обновите данные.');
+        return result;
+      } catch (error) {
+        if (error.code === 'AUTH_REQUIRED') clearSession();
+        if (error.name === 'AbortError' || error instanceof TypeError) throw new Error('Нет подтверждения от сервера. При отправке ответа не нажимайте повторно: сначала обновите реестр и проверьте статус.');
+        throw error;
+      } finally { clearTimeout(timer); }
+    }
+    window.addEventListener('load', async function() {
+      try { sessionStorage.removeItem('ADMIN_SESSION_PW'); sessionToken = sessionStorage.getItem('ADMIN_SESSION_TOKEN_V2') || ''; } catch (_) {}
+      $('replyText').addEventListener('input', updateSendButton);
+      $('followupCheck').addEventListener('change', updateSendButton);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden && sessionToken) loadAppeals(false); });
+      if (sessionToken) {
+        try { await loadAppeals(true, true); showPanel(); } catch (_) { clearSession(); }
+      }
+      updateSendButton();
+    });
+    function togglePasswordVisibility() { $('pwInput').type = $('pwInput').type === 'password' ? 'text' : 'password'; }
+    async function login() {
+      const password = $('pwInput').value;
+      if (!password || $('btnLogin').disabled) return;
+      $('btnLogin').disabled = true; $('authErrorNotice').style.display = 'none';
+      try {
+        const result = await apiRequest({ action:'admin_login', password });
+        sessionToken = result.sessionToken;
+        if (!sessionToken) throw new Error('Сервер не вернул сессию. Проверьте версию Apps Script.');
+        try { sessionStorage.setItem('ADMIN_SESSION_TOKEN_V2', sessionToken); } catch (_) {}
+        $('pwInput').value = '';
+        await loadAppeals(true, true); showPanel();
+      } catch (error) { $('authErrorNotice').style.display = 'block'; $('authErrorNotice').textContent = error.message; }
+      finally { $('btnLogin').disabled = false; }
+    }
+    function showPanel() {
+      $('authSection').style.display = 'none'; $('adminPanel').style.display = 'block'; $('headerActions').style.display = 'flex';
+      startAutoSync();
+    }
+    function clearSession() {
+      clearTimeout(syncIntervalId); sessionToken = ''; rawAppealsList = []; selectedKey = ''; drafts.clear(); operations.clear();
+      try { sessionStorage.removeItem('ADMIN_SESSION_TOKEN_V2'); } catch (_) {}
+      $('adminPanel').style.display = 'none'; $('headerActions').style.display = 'none'; $('authSection').style.display = 'block'; $('pwInput').value = '';
+      $('appealsContainer').replaceChildren(); $('replyText').value = ''; $('targetFio').value = ''; $('targetDisplayId').value = ''; $('targetCategory').value = ''; $('selectedQuestion').textContent = ''; $('previousReply').textContent = ''; removeAttachedFile();
+    }
+    async function logout() {
+      if (sendInFlight) { notice('error','Дождитесь результата отправки, затем выйдите из кабинета.'); return; }
+      try { await apiRequest({ action:'admin_logout' },10000); } catch (_) {}
+      clearSession();
+    }
+    function startAutoSync() {
+      clearTimeout(syncIntervalId);
+      if (!$('autoSyncCheck').checked || !sessionToken) return;
+      syncIntervalId = setTimeout(async () => { if (!document.hidden) await loadAppeals(false); startAutoSync(); }, 15000);
+    }
+    function toggleAutoSync() {
+      startAutoSync();
+      if (!$('autoSyncCheck').checked) $('syncText').textContent = 'Автообновление приостановлено';
+    }
+    async function loadAppeals(visual, rethrow = false) {
+      if (syncing || !sessionToken) return;
+      syncing = true;
+      if (visual) $('syncText').textContent = 'Обновляем реестр…';
+      try {
+        const result = await apiRequest({ action:'get_admin_appeals' });
+        if (!Array.isArray(result.data)) throw new Error('Некорректный ответ сервера.');
+        rawAppealsList = result.data;
+        updateStats(rawAppealsList); applyFilters(); updateRecipient();
+        $('syncText').textContent = 'Обновлено в ' + new Date(result.serverTime || Date.now()).toLocaleTimeString('ru-RU', {timeZone:'Europe/Moscow',hour:'2-digit',minute:'2-digit',second:'2-digit'}) + ' МСК' + ($('autoSyncCheck').checked ? ' · каждые 15 сек' : ' · вручную');
+      } catch (error) { $('syncText').textContent = error.message; if (rethrow) throw error; }
+      finally { syncing = false; }
+    }
+    function updateStats(list) {
+      $('statTotal').textContent = list.length;
+      $('statPending').textContent = list.filter(item => !isAnswered(item)).length;
+      $('statAnswered').textContent = list.filter(isAnswered).length;
+      $('statUnverified').textContent = list.filter(item => !item.identityVerified).length;
+    }
+    function setFilter(type) {
+      activeFilter = type;
+      for (const [id, value] of [['fAll','all'],['fWait','wait'],['fDone','done'],['fUnsafe','unsafe']]) { $(id).classList.toggle('active',type === value); $(id).setAttribute('aria-pressed', String(type === value)); }
+      applyFilters();
+    }
+    function applyFilters() {
+      const query = $('tableSearch').value.toLowerCase().trim();
+      const list = rawAppealsList.filter(item => {
+        if (activeFilter === 'wait' && isAnswered(item) || activeFilter === 'done' && !isAnswered(item) || activeFilter === 'unsafe' && item.identityVerified) return false;
+        return !query || ['fio','phone','org','category','text','userId','chatId','appealId'].some(key => String(item[key] || '').toLowerCase().includes(query));
+      });
+      $('listCount').textContent = list.length + ' из ' + rawAppealsList.length;
+      renderList(list);
+    }
+    function renderList(list) {
+      const container = $('appealsContainer');
+      if (!list.length) { container.innerHTML = '<div class="empty-state"><span>◎</span><strong>Обращений не найдено</strong><p>Попробуйте изменить запрос или фильтр.</p></div>'; return; }
+      container.innerHTML = list.map(item => {
+        const key = itemKey(item), selected = selectedKey === key;
+        const doc = safeUrl(item.fileUrl);
+        const phase = item.deliveryPhase;
+        const status = phase === 'unknown' ? 'Результат отправки неизвестен' : phase === 'sending' ? 'Отправка начата' : item.status;
+        return `<article class="appeal-item ${selected ? 'selected' : ''}" data-key="${escapeHtml(key)}" tabindex="0" role="button" aria-pressed="${selected}">
+          <div class="appeal-head"><span class="appeal-number">${item.appealId ? '№ ' + escapeHtml(item.appealId.slice(0,8)) : 'Старая запись · строка ' + Number(item.rowIdx)} · ${escapeHtml(item.date)}</span><span class="route-dot ${item.identityVerified ? 'verified' : 'unverified'}" title="${escapeHtml(item.identityMessage)}">${item.identityVerified ? '✓ MAX' : '! Проверить ID'}</span></div>
+          <div class="fio-title">${escapeHtml(item.fio)}</div><div class="meta-line">${escapeHtml(item.org)}</div>
+          <div class="text-preview">${escapeHtml(item.text)}</div><div class="appeal-foot"><span class="category-chip">${escapeHtml(item.category)}</span><span class="status-tag ${isAnswered(item) ? 'tag-done' : 'tag-wait'}">${escapeHtml(status)}</span></div>
+          ${doc ? `<a class="document-link" href="${escapeHtml(doc)}" target="_blank" rel="noopener noreferrer">📎 ${escapeHtml(item.fileName || 'Документ ответа')}</a>` : ''}</article>`;
+      }).join('');
+      container.querySelectorAll('[data-key]').forEach(element => {
+        element.addEventListener('click', event => { if (!event.target.closest('a')) selectAppeal(element.dataset.key); });
+        element.addEventListener('keydown', event => { if (event.target === element && (event.key === 'Enter' || event.key === ' ')) { event.preventDefault(); selectAppeal(element.dataset.key); } });
+      });
+    }
+    function saveDraft() {
+      if (selectedKey) drafts.set(selectedKey, { text:$('replyText').value, org:$('targetOrg').value, base64:attachedFileBase64, fileName:attachedFileName, mime:attachedFileMime, followup:$('followupCheck').checked });
+    }
+    function selectAppeal(key) {
+      if (sendInFlight || selectedKey === key) return;
+      const item = rawAppealsList.find(item => itemKey(item) === key); if (!item) return;
+      saveDraft(); selectedKey = key; selectedOrg = item.org || DEFAULT_KOMITET_NAME;
+      removeAttachedFile();
+      const draft = drafts.get(key);
+      $('replyText').value = draft ? draft.text : '';
+      $('targetOrg').value = draft ? draft.org : selectedOrg;
+      $('followupCheck').checked = !!draft?.followup;
+      if (draft?.base64) {
+        attachedFileBase64 = draft.base64; attachedFileName = draft.fileName; attachedFileMime = draft.mime;
+        $('fileNameLabel').textContent = draft.fileName; $('fileChip').style.display = 'flex';
+      }
+      $('btnOrgSchool').style.display = selectedOrg !== DEFAULT_KOMITET_NAME ? 'inline-block' : 'none';
+      $('btnOrgSchool').textContent = 'От школы';
+      updateRecipient(); applyFilters();
+      if (window.innerWidth < 900) $('replyComposer').scrollIntoView({behavior:'smooth',block:'start'});
+    }
+    function updateRecipient() {
+      const item = selectedItem();
+      if (!item) {
+        $('recipientNotice').className = 'recipient-notice neutral'; $('recipientNotice').textContent = selectedKey ? 'Запись больше не найдена в реестре. Отправка заблокирована.' : 'Выберите обращение слева. Здесь появятся подтверждённый адресат и текст вопроса.';
+        updateSendButton(); return;
+      }
+      $('targetDisplayId').value = item.userId || 'Не подтверждён'; $('targetFio').value = item.fio || ''; $('targetCategory').value = item.category || '';
+      $('selectedIndicator').textContent = item.appealId ? '№ ' + item.appealId : 'Старая запись · строка ' + item.rowIdx;
+      $('selectedQuestion').textContent = item.text || '';
+      $('selectedMeta').textContent = (item.date || '') + ' · ' + (item.phone || '') + ' · ' + (item.source || '');
+      $('previousReply').textContent = item.replyText ? 'Предыдущий ответ (' + item.replyDate + '):\n' + item.replyText : '';
+      $('previousReply').hidden = !item.replyText;
+      $('followupWrap').hidden = !item.replyText;
+      $('recipientNotice').className = 'recipient-notice ' + (item.canReply ? 'verified' : 'blocked');
+      $('recipientNotice').textContent = item.deliveryPhase === 'unknown' || item.deliveryPhase === 'sending' ? 'Отправка начата или её результат неизвестен. Повтор заблокирован. Проверьте личный чат и журнал _MAX_Доставки_v2 в таблице.' : (item.identityMessage || 'Получатель не подтверждён. Обновите серверный скрипт.');
+      updateSendButton();
+    }
+    function updateSendButton() {
+      const item = selectedItem();
+      $('btnSendReply').disabled = sendInFlight || fileReading || !item?.canReply || !item.appealId || !$('replyText').value.trim() || (!!item.replyText && !$('followupCheck').checked);
+      $('btnSendReply').textContent = sendInFlight ? 'Отправляем ответ…' : fileReading ? 'Читаем вложение…' : 'Направить ответ в личный чат MAX';
+      $('replyCounter').textContent = $('replyText').value.length.toLocaleString('ru-RU') + ' / 6 000';
+    }
+    function setReplyOrg(type) { $('targetOrg').value = type === 'komitet' ? DEFAULT_KOMITET_NAME : selectedOrg || DEFAULT_KOMITET_NAME; }
+    function applyTemplate(type) {
+      const templates = {
+        work:'Ваше обращение принято к рассмотрению. Специалистами запрошены необходимые сведения в образовательной организации. О результатах рассмотрения вам будет сообщено дополнительно.',
+        done:'Сообщаем, что вопрос, изложенный в вашем обращении, успешно урегулирован. Администрацией образовательной организации приняты необходимые меры в соответствии с нормативными регламентами.',
+        visit:'Для детального решения вопроса приглашаем вас на личный прием к руководителю образовательной организации в приемные часы (по предварительному согласованию времени по официальному телефону школы).'
+      };
+      if (sendInFlight) return;
+      $('replyText').value = templates[type] || ''; updateSendButton(); $('replyText').focus();
+    }
+    function handleFileSelected(event) {
+      const file = event.target.files[0]; if (!file || sendInFlight) return;
+      if (file.size > 8 * 1024 * 1024 || !file.size) { notice('error','Выберите непустой файл размером до 8 МБ.'); removeAttachedFile(); return; }
+      removeAttachedFile();
+      const sequence = ++fileSequence, key = selectedKey;
+      fileReading = true; updateSendButton();
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (sequence !== fileSequence || selectedKey !== key) return;
+        attachedFileBase64 = String(reader.result).split(',')[1]; attachedFileName = file.name; attachedFileMime = file.type || 'application/octet-stream';
+        $('fileNameLabel').textContent = file.name + ' · ' + Math.ceil(file.size / 1024) + ' КБ'; $('fileChip').style.display = 'flex';
+        fileReading = false; updateSendButton();
+      };
+      reader.onerror = () => { if (sequence === fileSequence) { removeAttachedFile(); notice('error','Не удалось прочитать файл. Выберите его заново.'); } };
+      reader.readAsDataURL(file);
+    }
+    function removeAttachedFile() {
+      fileSequence++; fileReading = false; attachedFileBase64 = attachedFileName = attachedFileMime = null;
+      $('replyFileInput').value = ''; $('fileChip').style.display = 'none'; updateSendButton();
+    }
+    function newOperationId() { return crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2,'0')).join(''); }
+    async function sendOfficialReply() {
+      const item = selectedItem();
+      if (sendInFlight || fileReading || !item?.canReply || !item.appealId || $('btnSendReply').disabled) return;
+      const payload = { action:'admin_send_reply', appealId:item.appealId, replyText:$('replyText').value.trim(), org:$('targetOrg').value.trim() || selectedOrg || DEFAULT_KOMITET_NAME,
+        allowFollowup:$('followupCheck').checked, fileName:attachedFileName, fileBase64:attachedFileBase64, fileMimeType:attachedFileMime };
+      if (!payload.replyText || payload.replyText.length > 6000) { notice('error','Введите ответ длиной до 6000 символов.'); return; }
+      const key = selectedKey;
+      sendInFlight = true; updateSendButton();
+      $('replyText').readOnly = true;
+      try {
+        const hashBytes = await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(payload)));
+        const hash = Array.from(new Uint8Array(hashBytes),b => b.toString(16).padStart(2,'0')).join('');
+        let operation = operations.get(key);
+        if (!operation || operation.hash !== hash) { operation = { id:newOperationId(), hash }; operations.set(key,operation); }
+        payload.requestId = operation.id;
+        const result = await apiRequest(payload,120000);
+        notice('success',(result.duplicate ? 'Повторная отправка предотвращена. ' : '') + 'MAX подтвердил приём ответа для ' + item.fio + ' (' + result.deliveredId + '). Обращение № ' + result.appealId + (result.fileName ? '. Вложение: ' + result.fileName : '') + '.');
+        if (selectedKey === key) { $('replyText').value = ''; removeAttachedFile(); $('followupCheck').checked = false; }
+        drafts.delete(key);
+        await loadAppeals(false);
+      } catch (error) { notice('error',error.message); await loadAppeals(false); }
+      finally { sendInFlight = false; $('replyText').readOnly = false; updateRecipient(); }
+    }
+
+  </script>
+</body>
+</html>

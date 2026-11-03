@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цифровое образование | Муниципальный округ Егорьевск</title>
+  <style>
+    :root {
+      --bg-page: #f5f7fb;
+      --card-bg: #ffffff;
+      --primary: #0f2e5a;
+      --primary-hover: #1e4277;
+      --accent: #2563eb;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --border-focus: #3b82f6;
+      --shadow-soft: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+      --radius-card: 22px;
+      --radius-inner: 14px;
+      --radius-pill: 9999px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 14px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .header-container {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0f2e5a 0%, #1e4277 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(15, 46, 90, 0.2);
+    }
+
+    .brand-icon-box svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: #ffffff;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.2px;
+    }
+
+    .brand-subtitle {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ecfdf5;
+      color: #059669;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 11.5px;
+      font-weight: 600;
+      border: 1px solid #d1fae5;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    .tabs-wrapper {
+      max-width: 640px;
+      margin: 16px auto 0;
+      padding: 0 16px;
+      width: 100%;
+    }
+
+    .nav-tabs {
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 9px 8px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tab-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tab-btn.active {
+      background: #ffffff;
+      color: var(--text-main);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    main {
+      flex: 1;
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    .view-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    .view-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .threema-card {
+      background: var(--card-bg);
+      border-radius: var(--radius-card);
+      padding: 22px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .card-header-flex {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-icon-squircle {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-icon-squircle svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .icon-blue { background: #eff6ff; stroke: #2563eb; }
+    .icon-purple { background: #faf5ff; stroke: #9333ea; }
+    .icon-amber { background: #fffbeb; stroke: #d97706; }
+
+    .card-title-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .user-profile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-left: auto;
+    }
+
+    .user-profile-badge.linked {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .dest-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .dest-option {
+      background: #f8fafc;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      padding: 12px 10px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dest-option svg {
+      width: 17px;
+      height: 17px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+    }
+
+    .dest-option.active {
+      background: #eff6ff;
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 11.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 14px;
+      font-size: 13.5px;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      background-color: #f8fafc;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.18s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--border-focus);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border: none;
+      border-radius: var(--radius-inner);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+      transition: all 0.2s ease;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-submit:disabled {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 14px;
+    }
+
+    .search-box input {
+      padding-left: 38px;
+      background: #f8fafc;
+    }
+
+    .search-box svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 17px;
+      height: 17px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .faq-item {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      margin-bottom: 10px;
+      overflow: hidden;
+      background: #ffffff;
+      transition: border-color 0.18s ease;
+    }
+
+    .faq-header {
+      padding: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .faq-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .faq-tag {
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #2563eb;
+      padding: 2px 7px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .faq-question-text {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .faq-chevron {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 2;
+      transition: transform 0.22s ease;
+      flex-shrink: 0;
+    }
+
+    .faq-chevron.rotate {
+      transform: rotate(180deg);
+      stroke: var(--accent);
+    }
+
+    .faq-body {
+      display: none;
+      padding: 12px 14px 14px;
+      background: #f8fafc;
+      border-top: 1px solid var(--border-color);
+      font-size: 13px;
+      color: #334155;
+      line-height: 1.55;
+      white-space: pre-line;
+    }
+
+    .faq-body.show {
+      display: block;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .school-item-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-inner);
+      padding: 14px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .school-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .school-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .school-inn-pill {
+      font-size: 10.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #f1f5f9;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .school-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: #334155;
+      margin-top: 4px;
+    }
+
+    .school-row svg {
+      width: 14px;
+      height: 14px;
+      stroke: #94a3b8;
+      stroke-width: 2;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .btn-choose-school {
+      margin-top: 10px;
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 12.5px;
+      font-weight: 600;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      color: var(--accent);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-choose-school:hover {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .notification {
+      padding: 12px 14px;
+      border-radius: var(--radius-inner);
+      font-size: 13px;
+      margin-bottom: 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification.success {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+      display: flex;
+    }
+
+    .notification.error {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      display: flex;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 26px 16px 34px;
+      border-top: 1px solid var(--border-color);
+      background: #ffffff;
+      color: var(--text-muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .footer-container {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-org {
+      font-weight: 700;
+      color: var(--text-main);
+      font-size: 12.5px;
+    }
+
+    .footer-dev {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 11.5px;
+    }
+
+    .footer-dev svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--text-muted);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .footer-rights {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+      :root { --bg-page:#f2f5f7; --primary:#123c47; --primary-hover:#0b5962; --accent:#087e82; --border-focus:#0b8e90; --text-main:#17343f; --text-muted:#637b84; --radius-card:24px; --shadow-soft:0 12px 36px -18px #13394235; }
+    body { background:radial-gradient(ellipse at 85% 10%,#e2efee 0,transparent 45%),var(--bg-page); }
+    header { padding:14px 20px; background:#fffffff0; }
+    .header-container { max-width:780px; }
+    .brand-icon-box { background:#123c47; box-shadow:none; border-radius:13px; }
+    .brand-subtitle { max-width:230px; }
+    .status-badge { color:#37606a; background:#edf3f4; font-size:11px; }
+    .status-dot { background:#0c8885; box-shadow:none; }
+    .welcome { width:100%; max-width:820px; padding:30px 20px 22px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+    .eyebrow { font-size:10px; font-weight:750; letter-spacing:1.6px; color:#69838b; text-transform:uppercase; }
+    .welcome h1 { font-size:clamp(26px,5vw,36px); line-height:1.13; letter-spacing:-1px; margin:9px 0 10px; font-weight:750; }
+    .welcome p { max-width:470px; color:var(--text-muted); font-size:13px; line-height:1.6; }
+    .welcome-seal { flex:none; width:100px; height:100px; border:1px solid #b8d5d4; border-radius:50%; display:grid; place-content:center; text-align:center; color:#2e6d72; background:#ffffff55; box-shadow:0 0 0 9px #ffffff35; }
+    .welcome-seal strong { font-size:28px; line-height:1.2; font-weight:600; }
+    .welcome-seal span { font-size:10px; letter-spacing:1px; }
+    .tabs-wrapper { background:transparent; border:0; position:static; padding:0 20px; }
+    .nav-tabs { max-width:780px; margin:auto; padding:5px; background:#e5eced; border:1px solid #dbe5e7; border-radius:16px; gap:4px; }
+    .tab-btn { border:0; border-radius:12px; padding:12px 8px; font-size:12px; color:#557078; }
+    .tab-btn.active { background:white; color:#0b686c; box-shadow:0 2px 6px #103d4910; border:0; }
+    .tab-btn::after { display:none; }
+    main { width:100%; max-width:820px; padding:22px 20px 30px; }
+    .threema-card { border:1px solid #dde7e9; padding:26px; box-shadow:var(--shadow-soft); }
+    .card-header-flex { gap:12px; flex-wrap:wrap; padding-bottom:18px; border-bottom:1px solid #edf2f3; margin-bottom:18px; }
+    .card-title-text { font-size:16px; }
+    .card-icon-squircle { width:38px; height:38px; border-radius:12px; }
+    .icon-blue { background:#e6f3f1; color:#0a7b77; }
+    .user-profile-badge { font-size:10px; margin-left:0; background:#f0f4f5; }
+    .user-profile-badge.linked { background:#e6f4ef; color:#17634f; }
+    .identity-panel { display:flex; align-items:flex-start; gap:10px; padding:13px 14px; background:#f1f5f6; border:1px solid #e2e9eb; border-radius:14px; margin-bottom:22px; color:#526f7a; font-size:12px; }
+    .identity-panel .identity-icon { font-size:16px; line-height:1.4; }
+    .identity-panel.verified { background:#eef8f4; border-color:#d1eade; color:#29634f; }
+    .identity-panel.error { background:#fff7ed; border-color:#f0ddc3; color:#815723; }
+    .identity-panel strong { display:block; font-size:12px; margin-bottom:3px; }
+    .identity-panel button { border:0; color:inherit; background:transparent; text-decoration:underline; cursor:pointer; font-size:12px; margin-top:8px; padding:0; }
+    label { font-size:12px; font-weight:650; letter-spacing:0; text-transform:none; color:#395660; }
+    .dest-option { border-radius:13px; padding:13px 10px; font-size:12px; }
+    .dest-option.active { border-color:#0b8585; background:#eef8f7; color:#087a78; box-shadow:inset 0 0 0 1px #0b858510; }
+    .form-group { margin-bottom:18px; }
+    input,select,textarea { background:#f8fafb; border:1px solid #dde6e9; font-size:14px; border-radius:12px; min-width:0; }
+    input:focus,select:focus,textarea:focus { box-shadow:0 0 0 3px #0a848414; border-color:#0b8585; }
+    textarea { min-height:140px; resize:vertical; }
+    .field-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .field-help { display:flex; justify-content:space-between; font-size:11px; color:#789099; margin-top:6px; gap:10px; }
+    .section-step { display:flex; align-items:center; gap:8px; margin:20px 0 13px; color:#749097; font-size:10px; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; }
+    .section-step span { display:grid; place-items:center; width:22px; height:22px; color:#1b797b; background:#e9f3f3; border-radius:7px; letter-spacing:0; }
+    .progress-track { height:3px; background:#e9eff0; border-radius:4px; overflow:hidden; margin:20px 0 14px; }
+    .progress-fill { width:0; height:100%; background:#0b8a87; transition:width .2s; }
+    .btn-submit { background:#0c777b; box-shadow:0 5px 14px #0b777b23; padding:15px; border-radius:13px; font-size:14px; }
+    .btn-submit:hover { background:#0a6368; box-shadow:0 6px 18px #0b777b25; }
+    .btn-submit:disabled { background:#9aadb2; box-shadow:none; cursor:not-allowed; transform:none; }
+    .form-footnote { color:#789098; font-size:11px; text-align:center; margin-top:10px; }
+    .notification { line-height:1.6; overflow-wrap:anywhere; }
+    .faq-item { border-color:#e2e9ec; border-radius:14px; overflow:hidden; margin-bottom:10px; }
+    .faq-header { cursor:pointer; }
+    .faq-body { white-space:pre-line; }
+    .faq-tag { color:#347378; background:#eaf4f3; }
+    .school-item-card { border-radius:16px; background:#fafcfc; }
+    .btn-choose-school { background:#e8f3f2; color:#186b70; border-color:#d4e7e5; }
+    footer { background:transparent; border-top:1px solid #dfe8eb; }
+    :focus-visible { outline:3px solid #12a2a580; outline-offset:3px; }
+    @media(max-width:520px) { header { padding:12px 15px; } .brand-title{font-size:13px} .brand-subtitle{font-size:10px;max-width:190px} .status-badge{display:none} .welcome{padding:24px 16px 18px} .welcome-seal{width:70px;height:70px} .welcome-seal strong{font-size:23px} .welcome-seal span{font-size:8px} .welcome p{font-size:12px} .tabs-wrapper{padding:0 12px} .nav-tabs{gap:0} .tab-btn{font-size:10.5px;gap:5px;padding:11px 4px} .tab-btn svg{width:15px;height:15px} main{padding:16px 12px 24px} .threema-card{padding:18px 16px;border-radius:20px} .card-title-text{font-size:14px} .field-grid{grid-template-columns:1fr;gap:0} .card-header-flex{gap:9px} input,select,textarea{font-size:16px} }
+    @media(prefers-reduced-motion:reduce) { *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important} }
+
+  </style>
+  <meta name="referrer" content="no-referrer">
+  <script src="https://st.max.ru/js/max-web-app.js" defer></script>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="brand-group">
+        <div class="brand-icon-box">
+          <svg viewBox="0 0 24 24">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="brand-title">Цифровое образование</div>
+          <div class="brand-subtitle">Комитет по образованию м.о. Егорьевск</div>
+        </div>
+      </div>
+      <div class="status-badge">
+        <span class="status-dot"></span> <span id="connectionLabel">Электронная приёмная</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="welcome" aria-label="Электронная приёмная">
+    <div><div class="eyebrow">Муниципальный округ Егорьевск</div><h1>На связи с образованием</h1><p>Задайте вопрос Комитету или вашей школе.<br>Официальный ответ — в личном чате MAX.</p></div>
+    <div class="welcome-seal" aria-label="14 школ округа"><strong>14</strong><span>ШКОЛ ОКРУГА</span></div>
+  </section>
+  <div class="tabs-wrapper">
+    <nav class="nav-tabs" aria-label="Разделы приёмной">
+      <button class="tab-btn active" onclick="switchTab('appeal')">
+        <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        Подать обращение
+      </button>
+      <button class="tab-btn" onclick="switchTab('faq')">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        Вопросы (FAQ)
+      </button>
+      <button class="tab-btn" onclick="switchTab('schools')">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        14 школ округа
+      </button>
+    </nav>
+  </div>
+
+  <main>
+    <section id="section-appeal" class="view-section active">
+      <div id="notice-box" class="notification" role="status" aria-live="polite"></div>
+
+      <div class="threema-card">
+        <div class="card-header-flex">
+          <div class="card-icon-squircle icon-blue">
+            <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <div class="card-title-text">Новое обращение</div>
+          <div id="userBadge" class="user-profile-badge">MAX · подключение</div>
+        </div>
+
+        <div id="identityStatus" class="identity-panel loading" role="status" aria-live="polite">
+          <span class="identity-icon" aria-hidden="true">◈</span><div><strong>Ответ лично вам</strong><span id="identityMessage">Подключаем профиль MAX…</span><br><button id="identityRetry" type="button" hidden>Проверить снова</button></div>
+        </div>
+        <div class="section-step"><span>1</span> Выберите адресата</div>
+        <label>Куда направляется обращение</label>
+        <div class="dest-selector">
+          <button type="button" id="optKomitet" class="dest-option active" onclick="setDestination('komitet')">
+            <svg viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M5 10v11M19 10v11M9 10v11M15 10v11M12 3l9 7H3z"/></svg>
+            В Комитет
+          </button>
+          <button type="button" id="optSchool" class="dest-option" onclick="setDestination('school')">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            В школу округа
+          </button>
+        </div>
+
+        <form id="appealForm" onsubmit="submitForm(event)">
+          <div class="form-group" id="schoolSelectGroup" style="display: none;">
+            <label for="schoolSelect">Выберите образовательное учреждение</label>
+            <select id="schoolSelect">
+              <option value="МОУ СОШ № 13" selected>МОУ СОШ № 13</option>
+              <option value="МБОУ СОШ № 1">МБОУ СОШ № 1</option>
+              <option value="МБОУ СОШ № 2">МБОУ СОШ № 2</option>
+              <option value="МБОУ СОШ № 3 с УИОП">МБОУ СОШ № 3 с УИОП</option>
+              <option value="МБОУ СОШ № 4">МБОУ СОШ № 4</option>
+              <option value="МБОУ СОШ № 5">МБОУ СОШ № 5</option>
+              <option value="МБОУ СОШ № 8">МБОУ СОШ № 8</option>
+              <option value="МКОУ «Школа № 9 для обучающихся с ОВЗ»">МКОУ «Школа № 9 для обучающихся с ОВЗ»</option>
+              <option value="МБОУ Гимназия № 10">МБОУ Гимназия № 10</option>
+              <option value="МБОУ СОШ № 12 с УИОП">МБОУ СОШ № 12 с УИОП</option>
+              <option value="МАОУ «Центр образования»">МАОУ «Центр образования»</option>
+              <option value="МБОУ СОШ № 15">МБОУ СОШ № 15</option>
+              <option value="МАОУ «Георгиевская гимназия»">МАОУ «Георгиевская гимназия»</option>
+              <option value="МКОУ «Клеменовская школа-интернат с ОВЗ»">МКОУ «Клеменовская школа-интернат с ОВЗ»</option>
+            </select>
+          </div>
+
+          <div class="section-step"><span>2</span> Контактные данные</div>
+          <div class="field-grid">
+          <div class="form-group">
+            <label for="fioInput">ФИО заявителя</label>
+            <input type="text" id="fioInput" autocomplete="name" minlength="2" maxlength="200" placeholder="Иванов Иван Иванович" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phoneInput">Контактный телефон</label>
+            <input type="tel" id="phoneInput" autocomplete="tel" inputmode="tel" maxlength="40" placeholder="+7 (___) ___-__-__" required>
+          </div>
+
+          </div>
+          <div class="section-step"><span>3</span> Опишите ваш вопрос</div>
+          <div class="form-group">
+            <label for="categorySelect">Категория вопроса</label>
+            <select id="categorySelect" required>
+              <option value="Приём и перевод">Приём в школу и перевод обучающихся</option>
+              <option value="Питание">Горячее и льготное школьное питание</option>
+              <option value="ГИА (ОГЭ / ЕГЭ)">Государственная итоговая аттестация (ОГЭ, ЕГЭ)</option>
+              <option value="Электронный дневник">Электронный дневник («Моя школа»)</option>
+              <option value="Психологическая помощь">Консультация педагога-психолога</option>
+              <option value="Общие вопросы">Общие и административные вопросы</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="textInput">Суть обращения</label>
+            <textarea id="textInput" minlength="5" maxlength="10000" aria-describedby="textCounter" placeholder="Подробно опишите обстоятельства и ваш вопрос..." required></textarea>
+            <div class="field-help"><span>Укажите детали, которые помогут разобраться</span><span id="textCounter">0 / 10 000</span></div>
+          </div>
+
+          <div class="progress-track" aria-hidden="true"><div id="formProgress" class="progress-fill"></div></div>
+          <button type="submit" id="submitBtn" class="btn-submit" disabled>
+            <svg style="width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            Зарегистрировать обращение
+          </button>
+          <p class="form-footnote">Сохраните номер обращения после регистрации.</p>
+        </form>
+      </div>
+    </section>
+
+    <section id="section-faq" class="view-section">
+      <div class="threema-card">
+        <div class="card-header-flex">
+          <div class="card-icon-squircle icon-purple">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <div class="card-title-text">Справочник типовых ответов</div>
+        </div>
+
+        <div class="search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="faqSearch" placeholder="Поиск по ключевому слову или теме..." oninput="filterFaq()">
+        </div>
+
+        <div id="faqListContainer"></div>
+      </div>
+    </section>
+
+    <section id="section-schools" class="view-section">
+      <div class="threema-card">
+        <div class="card-header-flex">
+          <div class="card-icon-squircle icon-amber">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div class="card-title-text">Учреждения муниципального округа Егорьевск</div>
+        </div>
+
+        <div class="search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="schoolSearch" placeholder="Поиск по номеру (напр. 13), директору, ИНН..." oninput="filterSchools()">
+        </div>
+
+        <div id="schoolsListContainer"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-org">Комитет по образованию администрации муниципального округа Егорьевск</div>
+      <div class="footer-dev">
+        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Разработка и техническое сопровождение: МОУ СОШ № 13, учитель информатики Пушкин Артём Александрович
+      </div>
+      <div class="footer-rights">© 2026 Единая муниципальная система цифрового образования. Все права защищены.</div>
+    </div>
+  </footer>
+
+  <script>
+    const BACKEND_API_URL = 'https://script.google.com/macros/s/AKfycbw5zGkr605yPMHFp9nutKvDzynMWCOUE_AErJUJuFlXPZ9sjYlQ8NfxQpg5EfFvkni6/exec';
+    let currentDest = 'komitet';
+    let identity = null;
+    let verifiedRaw = '';
+    let submitting = false;
+    let verifying = null;
+    let pendingSubmission = null;
+    let expiryTimer = null;
+
+    function escapeHtml(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+    async function apiRequest(payload, timeout = 45000) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
+      try {
+        const response = await fetch(BACKEND_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload), signal: controller.signal, cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer' });
+        if (!response.ok) throw new Error('Сервис недоступен (HTTP ' + response.status + '). Повторите позже.');
+        const result = await response.json();
+        if (result.status !== 'success') {
+          const error = new Error(result.message || 'Сервис не подтвердил операцию.'); error.code = result.code; throw error;
+        }
+        return result;
+      } catch (error) {
+        if (error.name === 'AbortError' || error instanceof TypeError) throw new Error('Нет подтверждения от сервера. Проверьте соединение и повторите: номер операции сохранён для защиты от дублей.');
+        throw error;
+      } finally { clearTimeout(timer); }
+    }
+    function readMaxInitData() {
+      // Только целиком подписанная строка запуска. ID из браузерного хранилища,
+      // start_param, номера чата и initDataUnsafe не являются удостоверением личности.
+      if (window.WebApp && typeof window.WebApp.initData === 'string' && window.WebApp.initData) return window.WebApp.initData;
+      for (const part of [window.location.hash.slice(1), window.location.search.slice(1)]) {
+        const params = new URLSearchParams(part);
+        for (const key of ['WebAppData', 'maxWebAppData', 'initData']) {
+          if (params.get(key)) return params.get(key);
+        }
+        if (params.has('hash') && params.has('user') && params.has('auth_date')) return part;
+      }
+      return '';
+    }
+    function showIdentity(kind, message) {
+      const box = document.getElementById('identityStatus');
+      box.className = 'identity-panel ' + kind;
+      document.getElementById('identityMessage').textContent = message;
+      const badge = document.getElementById('userBadge');
+      badge.className = 'user-profile-badge' + (kind === 'verified' ? ' linked' : '');
+      badge.textContent = kind === 'verified' && identity ? 'MAX · id_' + identity.userId : 'MAX · ' + (kind === 'loading' ? 'подключение' : 'не подтверждён');
+      document.getElementById('identityRetry').hidden = kind === 'verified' || kind === 'loading';
+      document.getElementById('submitBtn').disabled = !identity || submitting;
+      document.getElementById('connectionLabel').textContent = kind === 'verified' ? 'MAX подключён' : 'Электронная приёмная';
+    }
+    async function verifyIdentity() {
+      if (verifying) return verifying;
+      verifying = (async () => {
+        identity = null; verifiedRaw = ''; clearTimeout(expiryTimer);
+        showIdentity('loading', 'Подключаем ваш профиль MAX… Обращение будет связано только с подтверждённым аккаунтом.');
+        try {
+          let raw = '';
+          for (let i = 0; i < 50; i++) {
+            raw = readMaxInitData();
+            if (raw) break;
+            await new Promise(resolve => setTimeout(resolve, 160));
+          }
+          if (!raw) throw new Error('Откройте мини-приложение кнопкой «Открыть» в личном чате с ботом MAX. Если оно уже открыто в чате — закройте окно и откройте заново.');
+          const result = await apiRequest({ action: 'verify_mini_app', initData: raw });
+          // Не применяем ответ, если за время проверки изменились данные запуска.
+          if (readMaxInitData() !== raw) throw new Error('Аккаунт MAX изменился. Нажмите «Проверить снова».');
+          identity = { userId: result.userId, name: result.name || '', expiresAt: result.expiresAt };
+          verifiedRaw = raw;
+          showIdentity('verified', (identity.name ? identity.name + '. ' : '') + 'Профиль подтверждён. Ответ придёт в ваш личный чат с ботом MAX.');
+          const fio = document.getElementById('fioInput');
+          if (!fio.value.trim() && identity.name) fio.value = identity.name;
+          expiryTimer = setTimeout(() => { identity = null; verifiedRaw = ''; showIdentity('error', 'Сессия MAX истекла. Скопируйте текст, закройте окно и откройте приложение заново.'); }, Math.max(0, result.expiresAt - Date.now()));
+          try { window.WebApp?.ready(); window.WebApp?.expand?.(); } catch (_) {}
+          return true;
+        } catch (error) { showIdentity('error', error.message); return false; }
+      })();
+      try { return await verifying; } finally { verifying = null; }
+    }
+    function newOperationId() {
+      if (crypto.randomUUID) return crypto.randomUUID();
+      return Array.from(crypto.getRandomValues(new Uint8Array(24)), b => b.toString(16).padStart(2, '0')).join('');
+    }
+    async function fingerprint(value) {
+      const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+      return Array.from(new Uint8Array(bytes), b => b.toString(16).padStart(2, '0')).join('');
+    }
+    function updateFormProgress() {
+      const length = document.getElementById('textInput').value.length;
+      document.getElementById('textCounter').textContent = length.toLocaleString('ru-RU') + ' / 10 000';
+      const ready = ['fioInput', 'phoneInput', 'textInput'].filter(id => document.getElementById(id).value.trim()).length;
+      document.getElementById('formProgress').style.width = Math.round(ready / 3 * 100) + '%';
+    }
+    window.addEventListener('load', function() {
+      // Удаляем старую неподтверждённую привязку; никогда её не читаем.
+      try { localStorage.removeItem('USER_MAX_ID'); } catch (_) {}
+      try { pendingSubmission = JSON.parse(sessionStorage.getItem('MAX_PENDING_OPERATION_V2') || 'null'); } catch (_) {}
+      renderFaqs(faqs); renderSchools(schools);
+      document.getElementById('appealForm').addEventListener('input', updateFormProgress);
+      document.getElementById('identityRetry').addEventListener('click', verifyIdentity);
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden && !submitting && readMaxInitData() !== verifiedRaw) verifyIdentity();
+      });
+      verifyIdentity();
+    });
+
+
+    const faqs = [
+      {
+        category: "Приём и перевод",
+        question: "Порядок записи ребенка в 1 класс и нормативная база",
+        answer: "Запись детей в 1 класс проводится в соответствии с Приказом Минпросвещения России от 02.09.2020 № 458 и ст. 67 Федерального закона № 273-ФЗ «Об образовании в РФ».\n\nКампания организована в 2 этапа через Региональный портал госуслуг (uslugi.mosreg.ru):\n• 1 этап (с 1 апреля по 30 июня) — для детей с регистрацией на закрепленной территории и льготных категорий;\n• 2 этап (с 6 июля по 5 сентября) — на свободные места в любую школу округа."
+      },
+      {
+        category: "Питание",
+        question: "Организация бесплатного и льготного горячего питания",
+        answer: "1. 1–4 классы: 100% учащихся получают бесплатное горячее питание автоматически за счет бюджета (заявление не требуется).\n\n2. 5–11 классы: льготное питание оформляется законными представителями через портал Госуслуг Московской области (услуга «Предоставление бесплатного питания в школах Московской области») либо через социального педагога школы (Закон МО № 1/2006-ОЗ)."
+      },
+      {
+        category: "ГИА (ОГЭ / ЕГЭ)",
+        question: "Сроки подачи заявлений на экзамены ГИА",
+        answer: "Сроки подачи заявлений:\n• ЕГЭ (11 класс) — до 1 февраля включительно;\n• ОГЭ (9 класс) — до 1 марта включительно.\n\nВыпускники текущего года подают заявления в своей школе. Информационный портал РЦОИ МО: rcoi.net."
+      },
+      {
+        category: "Электронный дневник",
+        question: "Вход во ФГИС «Моя школа»",
+        answer: "Авторизация в системе «Моя школа» выполняется с использованием подтвержденной учетной записи Госуслуг (ЕСИА):\nhttps://myschool.mosreg.ru\n\nЕсли дневник не открывается, обратитесь к классному руководителю для сверки СНИЛС ребенка в базе школы."
+      },
+      {
+        category: "Психологическая помощь",
+        question: "Запись на прием к педагогу-психологу",
+        answer: "Индивидуальные консультации проводятся бесплатно. Записаться можно через классного руководителя, администрацию школы или подав обращение через текущую форму."
+      }
+    ];
+
+    const schools = [
+      { name: "МБОУ СОШ № 1", director: "Аксёнов Георгий Иванович", phone: "+7 (49640) 3-34-31", email: "egor_school1@mosreg.ru", inn: "5011019080", address: "3-й микрорайон, д. 3А / с. Починки, ул. Молодёжная, д. 12" },
+      { name: "МБОУ СОШ № 2", director: "Карепина Ольга Сергеевна", phone: "+7 (49640) 4-58-56", email: "egor_school2@mosreg.ru", inn: "5011019097", address: "ул. Профсоюзная, д. 24 / п. Шувое, ул. Советская, д. 25" },
+      { name: "МБОУ СОШ № 3 с УИОП", director: "Становова Ирина Алексеевна", phone: "+7 (49640) 3-34-28", email: "egor_school3@mosreg.ru", inn: "5011019107", address: "ул. Антипова, д. 45 / с. Саввино / д. Иваново" },
+      { name: "МБОУ СОШ № 4", director: "Чеботарёва Наталья Евгеньевна", phone: "+7 (49640) 3-05-52", email: "egor_school4@mosreg.ru", inn: "5011019114", address: "1-й микрорайон, д. 69" },
+      { name: "МБОУ СОШ № 5", director: "Лопатина Инна Николаевна", phone: "+7 (49640) 3-64-24", email: "egor_school5@mosreg.ru", inn: "5011019121", address: "ул. 9 Января, д. 69 / д. Селиваниха, ул. Юбилейная, д. 17А" },
+      { name: "МБОУ СОШ № 8", director: "Гладышева Наталья Михайловна", phone: "+7 (49640) 3-93-95", email: "egor_school8@mosreg.ru", inn: "5011019146", address: "ул. Антипова, д. 22 / д. Юрцово, д. 212" },
+      { name: "МКОУ «Школа № 9 для обучающихся с ОВЗ»", director: "Логинова Светлана Анатольевна", phone: "+7 (49640) 3-95-50", email: "egor_school9ovz@mosreg.ru", inn: "5011019153", address: "Касимовское шоссе, д. 4А / ул. Владимирская, д. 1А" },
+      { name: "МБОУ Гимназия № 10", director: "Брызгалова Марина Анатольевна", phone: "+7 (49640) 2-45-43", email: "egor_gimn10@mosreg.ru", inn: "5011019178", address: "ул. Парижской Коммуны, д. 14/91 / с. Раменки, ул. Школьная, д. 7" },
+      { name: "МБОУ СОШ № 12 с УИОП", director: "Руководство образовательной организации", phone: "+7 (49640) 3-63-28", email: "egor_school12@mosreg.ru", inn: "5011019185", address: "1-й микрорайон, д. 61 / р.п. Рязановский, ул. Ленина, д. 1" },
+      { name: "МОУ СОШ № 13", director: "Турукина Наталья Николаевна", phone: "+7 (49640) 4-50-21", email: "egrv_mou_13@mosreg.ru", inn: "5011019192", address: "ул. Владимирская, д. 15А / п. Новый, д. 17" },
+      { name: "МАОУ «Центр образования»", director: "Глазова Мария Дмитриевна", phone: "+7 (49640) 3-24-67", email: "egrv_centrobr@mosreg.ru", inn: "5011018552", address: "ул. Горшкова, д. 32 / д. Михали, ул. Гагарина, д. 16А" },
+      { name: "МБОУ СОШ № 15", director: "Потеенко Людмила Анатольевна", phone: "+7 (49640) 3-26-50", email: "egor_school15@mosreg.ru", inn: "5011019202", address: "6-й микрорайон, д. 14А / д. Поповская, д. 50А" },
+      { name: "МАОУ «Георгиевская гимназия»", director: "Жиденькова Вера Юрьевна", phone: "+7 (49640) 4-20-80", email: "egor_georgimn@mosreg.ru", inn: "5011020085", address: "ул. Октябрьская, д. 17 / ул. Парижской Коммуны, д. 1Б" },
+      { name: "МКОУ «Клеменовская школа-интернат с ОВЗ»", director: "Голубева Елена Викторовна", phone: "+7 (49640) 6-22-31", email: "egor_klemenshkola@mosreg.ru", inn: "5011019227", address: "д. Клеменово, д. 88" }
+    ];
+
+    function setDestination(type) {
+      currentDest = type;
+      document.getElementById('optKomitet').setAttribute('aria-pressed', String(type === 'komitet'));
+      document.getElementById('optSchool').setAttribute('aria-pressed', String(type === 'school'));
+      const optK = document.getElementById('optKomitet');
+      const optS = document.getElementById('optSchool');
+      const grp = document.getElementById('schoolSelectGroup');
+
+      if (type === 'komitet') {
+        optK.classList.add('active');
+        optS.classList.remove('active');
+        grp.style.display = 'none';
+      } else {
+        optS.classList.add('active');
+        optK.classList.remove('active');
+        grp.style.display = 'block';
+      }
+    }
+
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.view-section').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach((b, i) => b.setAttribute('aria-current', ['appeal','faq','schools'][i] === tab ? 'page' : 'false'));
+      if (tab === 'appeal') {
+        document.querySelectorAll('.tab-btn')[0].classList.add('active');
+        document.getElementById('section-appeal').classList.add('active');
+      } else if (tab === 'faq') {
+        document.querySelectorAll('.tab-btn')[1].classList.add('active');
+        document.getElementById('section-faq').classList.add('active');
+      } else {
+        document.querySelectorAll('.tab-btn')[2].classList.add('active');
+        document.getElementById('section-schools').classList.add('active');
+      }
+    }
+
+    function appealToSchool(schoolName) {
+      switchTab('appeal');
+      setDestination('school');
+      const sel = document.getElementById('schoolSelect');
+      for (let i = 0; i < sel.options.length; i++) {
+        if (sel.options[i].value === schoolName) {
+          sel.selectedIndex = i;
+          break;
+        }
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderFaqs(list) {
+      const c = document.getElementById('faqListContainer');
+      if (!list.length) {
+        c.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:16px 0;">Вопросов не найдено.</div>';
+        return;
+      }
+      let html = '';
+      for (let i = 0; i < list.length; i++) {
+        html += '<div class="faq-item">' +
+          '<div class="faq-header" role="button" tabindex="0" aria-expanded="false" onkeydown="if(event.key===&quot;Enter&quot;||event.key===&quot; &quot;){event.preventDefault();this.click()}" onclick="toggleFaq(' + i + ')">' +
+            '<div class="faq-title-wrap">' +
+              '<span class="faq-tag">' + list[i].category + '</span>' +
+              '<span class="faq-question-text">' + list[i].question + '</span>' +
+            '</div>' +
+            '<svg class="faq-chevron" id="faq-chev-' + i + '" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>' +
+          '</div>' +
+          '<div class="faq-body" id="faq-ans-' + i + '">' + escapeHtml(list[i].answer) + '</div>' +
+        '</div>';
+      }
+      c.innerHTML = html;
+    }
+
+    function toggleFaq(idx) {
+      const ans = document.getElementById('faq-ans-' + idx);
+      const chev = document.getElementById('faq-chev-' + idx);
+      const isShow = ans.classList.toggle('show');
+      chev.classList.toggle('rotate', isShow);
+      ans.previousElementSibling.setAttribute('aria-expanded', String(isShow));
+    }
+
+    function filterFaq() {
+      const q = document.getElementById('faqSearch').value.toLowerCase().trim();
+      const filtered = [];
+      for (let i = 0; i < faqs.length; i++) {
+        if (faqs[i].question.toLowerCase().indexOf(q) !== -1 ||
+            faqs[i].answer.toLowerCase().indexOf(q) !== -1 ||
+            faqs[i].category.toLowerCase().indexOf(q) !== -1) {
+          filtered.push(faqs[i]);
+        }
+      }
+      renderFaqs(filtered);
+    }
+
+    function renderSchools(list) {
+      const c = document.getElementById('schoolsListContainer');
+      if (!list.length) {
+        c.innerHTML = '<div style="color:var(--text-muted); text-align:center; padding:16px 0;">Организаций не найдено.</div>';
+        return;
+      }
+      let html = '';
+      for (let i = 0; i < list.length; i++) {
+        const s = list[i];
+        html += '<div class="school-item-card">' +
+          '<div class="school-head">' +
+            '<div class="school-title">' + s.name + '</div>' +
+            '<div class="school-inn-pill">ИНН ' + s.inn + '</div>' +
+          '</div>' +
+          '<div class="school-row">' +
+            '<svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>' +
+            '<span><strong>Директор:</strong> ' + s.director + '</span>' +
+          '</div>' +
+          '<div class="school-row">' +
+            '<svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+            '<span><strong>Телефон:</strong> <a href="tel:' + s.phone.replace(/[^+0-9]/g, '') + '">' + s.phone + '</a></span>' +
+          '</div>' +
+          '<div class="school-row">' +
+            '<svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' +
+            '<span><a href="mailto:' + s.email + '">' + s.email + '</a></span>' +
+          '</div>' +
+          '<div class="school-row">' +
+            '<svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+            '<span>' + s.address + '</span>' +
+          '</div>' +
+          '<button type="button" class="btn-choose-school" onclick="appealToSchool(\'' + s.name + '\')">' +
+            '<svg style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+            'Написать обращение в эту школу' +
+          '</button>' +
+        '</div>';
+      }
+      c.innerHTML = html;
+    }
+
+    function filterSchools() {
+      const q = document.getElementById('schoolSearch').value.toLowerCase().trim();
+      const filtered = [];
+      for (let i = 0; i < schools.length; i++) {
+        const s = schools[i];
+        if (s.name.toLowerCase().indexOf(q) !== -1 ||
+            s.director.toLowerCase().indexOf(q) !== -1 ||
+            s.inn.indexOf(q) !== -1 ||
+            s.address.toLowerCase().indexOf(q) !== -1) {
+          filtered.push(s);
+        }
+      }
+      renderSchools(filtered);
+    }
+
+    async function submitForm(event) {
+      event.preventDefault();
+      if (submitting) return;
+      const form = document.getElementById('appealForm');
+      if (!form.reportValidity()) return;
+      const notice = document.getElementById('notice-box');
+      const btn = document.getElementById('submitBtn');
+      const payload = {
+        action: 'submit_mini_app_appeal',
+        fio: document.getElementById('fioInput').value.trim(),
+        phone: document.getElementById('phoneInput').value.trim(),
+        organization: currentDest === 'school' ? document.getElementById('schoolSelect').value : 'Комитет по образованию администрации муниципального округа Егорьевск',
+        category: document.getElementById('categorySelect').value,
+        text: document.getElementById('textInput').value.trim()
+      };
+      if (payload.phone.replace(/\D/g, '').length < 10 || payload.phone.replace(/\D/g, '').length > 15) {
+        notice.className = 'notification error'; notice.textContent = 'Проверьте телефон: он должен содержать от 10 до 15 цифр.'; document.getElementById('phoneInput').focus(); return;
+      }
+      submitting = true; btn.disabled = true; btn.textContent = 'Регистрируем обращение…'; form.setAttribute('aria-busy', 'true');
+      try {
+        if (!identity || identity.expiresAt <= Date.now() || readMaxInitData() !== verifiedRaw) {
+          if (!(await verifyIdentity())) throw new Error('Профиль MAX не подтверждён. Откройте мини-приложение заново из личного чата с ботом.');
+        }
+        const hash = await fingerprint(JSON.stringify([identity.userId, payload]));
+        if (!pendingSubmission || pendingSubmission.fingerprint !== hash) pendingSubmission = { id: newOperationId(), fingerprint: hash };
+        try { sessionStorage.setItem('MAX_PENDING_OPERATION_V2', JSON.stringify(pendingSubmission)); } catch (_) {}
+        payload.requestId = pendingSubmission.id; payload.initData = verifiedRaw;
+        const result = await apiRequest(payload);
+        if (!result.appealId) throw new Error('Сервер не вернул номер обращения. Повторите запрос с сохранённым номером операции.');
+        notice.className = 'notification success';
+        notice.textContent = (result.duplicate ? 'Обращение уже зарегистрировано. ' : 'Обращение зарегистрировано. ') + '№ ' + result.appealId + '. Адресат: ' + payload.organization + '. Ответ будет направлен в ваш личный чат MAX.';
+        // Не стираем новый текст, если человек успел изменить его во время запроса.
+        const area = document.getElementById('textInput');
+        if (area.value.trim() === payload.text) area.value = '';
+        pendingSubmission = null;
+        try { sessionStorage.removeItem('MAX_PENDING_OPERATION_V2'); } catch (_) {}
+        updateFormProgress();
+        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch (error) {
+        notice.className = 'notification error'; notice.textContent = error.message;
+        if (['INVALID_IDENTITY','IDENTITY_EXPIRED','IDENTITY_REQUIRED'].includes(error.code)) { identity = null; verifiedRaw = ''; showIdentity('error', error.message); }
+        notice.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } finally {
+        submitting = false; btn.disabled = !identity; btn.textContent = 'Зарегистрировать обращение'; form.removeAttribute('aria-busy');
+      }
+    }
+
+  </script>
+</body>
+</html>
