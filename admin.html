@@ -959,7 +959,7 @@ label{color:#293e60;font-weight:650}input,textarea,select{color:#16223c;backgrou
     function updateSendButton() {
       const item = selectedItem();
       $('btnSendReply').disabled = sendInFlight || fileReading || !item?.canReply || !item.appealId || !$('replyText').value.trim() || (!!item.replyText && !$('followupCheck').checked);
-      $('btnSendReply').textContent = sendInFlight ? 'Отправляем ответ…' : fileReading ? 'Читаем вложение…' : 'Направить ответ в личный чат MAX';
+      $('btnSendReply').textContent = sendInFlight ? (attachedFileBase64 ? 'Загружаем вложение и отправляем…' : 'Отправляем ответ…') : fileReading ? 'Читаем вложение…' : 'Направить ответ в личный чат MAX';
       $('replyCounter').textContent = $('replyText').value.length.toLocaleString('ru-RU') + ' / 6 000';
     }
     function setReplyOrg(type) { $('targetOrg').value = type === 'komitet' ? DEFAULT_KOMITET_NAME : selectedOrg || DEFAULT_KOMITET_NAME; }
@@ -1008,7 +1008,7 @@ label{color:#293e60;font-weight:650}input,textarea,select{color:#16223c;backgrou
         let operation = operations.get(key);
         if (!operation || operation.hash !== hash) { operation = { id:newOperationId(), hash }; operations.set(key,operation); }
         payload.requestId = operation.id;
-        const result = await apiRequest(payload,120000);
+        const result = await apiRequest(payload,240000);
         notice('success',(result.duplicate ? 'Повторная отправка предотвращена. ' : '') + 'MAX подтвердил приём ответа для ' + item.fio + ' (' + result.deliveredId + '). Обращение № ' + result.appealId + (result.fileName ? '. Вложение: ' + result.fileName : '') + '.');
         if (selectedKey === key) { $('replyText').value = ''; removeAttachedFile(); $('followupCheck').checked = false; }
         drafts.delete(key);
